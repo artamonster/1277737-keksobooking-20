@@ -45,7 +45,7 @@ var PHOTOS = [
 
 var PIN_OFFSET_X = -25;
 var PIN_OFFSET_Y = -35;
-var MAP = document.querySelector('.map');
+var map = document.querySelector('.map');
 
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -94,7 +94,7 @@ var createOffer = function (offerNumber) {
 };
 
 var activateMap = function () {
-  MAP.classList.remove('map--faded');
+  map.classList.remove('map--faded');
 };
 
 var createPin = function (offer) {
