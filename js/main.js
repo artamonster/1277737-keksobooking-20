@@ -16,13 +16,13 @@ var MAP_WIDTH = 1200;
 var MAP_TOP_Y = 130;
 var MAP_BOTTOM_Y = 630;
 
-var CHECKIN_TIME = [
+var CHECKIN_TIMES = [
   '12:00',
   '13:00',
   '14:00'
 ];
 
-var CHECKOUT_TIME = [
+var CHECKOUT_TIMES = [
   '12:00',
   '13:00',
   '14:00'
@@ -45,6 +45,7 @@ var PHOTOS = [
 
 var PIN_OFFSET_X = -25;
 var PIN_OFFSET_Y = -35;
+var MAP = document.querySelector('.map');
 
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -78,8 +79,8 @@ var createOffer = function (offerNumber) {
       type: getRandomElement(PROPERTIES_TYPE),
       rooms: getRandomIntInclusive(MIN_AMOUNT_ROOM, MAX_AMOUNT_ROOM),
       guests: getRandomIntInclusive(MIN_AMOUNT_GUEST, MAX_AMOUNT_GUEST),
-      checkin: getRandomElement(CHECKIN_TIME),
-      checkout: getRandomElement(CHECKOUT_TIME),
+      checkin: getRandomElement(CHECKIN_TIMES),
+      checkout: getRandomElement(CHECKOUT_TIMES),
       features: getRandomElement(FEATURES),
       description: 'строка с описанием',
       photos: PHOTOS
@@ -92,11 +93,13 @@ var createOffer = function (offerNumber) {
   return offer;
 };
 
-var activateMap = function (element) {
-  element.classList.remove('map--faded');
+var activateMap = function () {
+  MAP.classList.remove('map--faded');
 };
 
 var createPin = function (offer) {
+  var pinTemplate = document.querySelector('#pin')
+    .content.querySelector('.map__pin');
   var pin = pinTemplate.cloneNode(true);
   var pinX = offer.location.x + PIN_OFFSET_X;
   var pinY = offer.location.y + PIN_OFFSET_Y;
@@ -114,15 +117,11 @@ var renderPins = function (offers) {
   for (var j = 0; j < offers.length; j++) {
     fragment.appendChild(createPin(offers[j]));
   }
-  pin.appendChild(fragment);
+  var pins = document.querySelector('.map__pins');
+  pins.appendChild(fragment);
 };
+activateMap();
 
-var map = document.querySelector('.map');
-activateMap(map);
-
-var pin = document.querySelector('.map__pins');
-var pinTemplate = document.querySelector('#pin')
-  .content.querySelector('.map__pin');
 var offers = getListOfOffers();
 
 renderPins(offers);
