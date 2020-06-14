@@ -7,12 +7,12 @@ var PROPERTIES_TYPE = [
   'house',
   'bungalo'
 ];
-var RU_PROPERTIES_TYPE = [
-  'Дворец',
-  'Квартира',
-  'Дом',
-  'Бунгало'
-];
+var RU_PROPERTIES_TYPE = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalo: 'Бунгало'
+};
 var MIN_AMOUNT_ROOM = 1;
 var MAX_AMOUNT_ROOM = 5;
 var MIN_AMOUNT_GUEST = 1;
@@ -42,6 +42,15 @@ var FEATURES = [
   'elevator',
   'conditioner'
 ];
+
+var RU_FEATURES = {
+  wifi: 'Беспроводной интернет',
+  dishwasher: 'Посудомойка',
+  parking: 'Парковка',
+  washer: 'Стиральная машина',
+  elevator: 'Лифт',
+  conditioner: 'Кондиционер',
+};
 
 var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
@@ -183,7 +192,7 @@ var createCard = function (advertisement) {
   time.textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
 
   var features = card.querySelector('.popup__features');
-  features.textContent = FEATURES[advertisement.offer.features];
+  features.textContent = RU_FEATURES[advertisement.offer.features];
 
   var description = card.querySelector('.popup__description');
   description.textContent = advertisement.offer.description;
