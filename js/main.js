@@ -1,4 +1,6 @@
 'use strict';
+var PHOTOS_WIDTH = 40;
+var PHOTOS_HEIGHT = 40;
 
 var OFFERS_NUMBER = 8;
 var PROPERTIES_TYPE = [
@@ -146,27 +148,45 @@ renderPins(offers);
 
 var getEndingsRooms = function (number) {
   if (number === 1) {
-    return 'a';
+    return ' комната';
   }
-  return (number >= 2 && number <= 4) ? 'ы' : '';
+  return (number >= 2 && number <= 4) ? ' комнаты' : ' комнат';
 };
+
 var getEndingsGuests = function (number) {
-  return number === 1 ? 'я' : 'ей';
+  return number === 1 ? ' гостя' : ' гостей';
 };
-var generateText = function (rooms, guests) {
+
+var getRoomsGuestsCountText = function (rooms, guests) {
   var endingWordRooms = getEndingsRooms(rooms);
   var endingWordGuests = getEndingsGuests(guests);
-  var text = rooms + ' комнат' + endingWordRooms + ' для ' + guests + ' гост' + endingWordGuests;
+  var text = rooms + endingWordRooms + ' для ' + guests + endingWordGuests;
   return text;
 };
-var generatePhotos = function (photos) {
-  var imgTags = '';
 
-  for (var i = 0; i < photos.length; i++) {
-    imgTags += '<img src="' + photos[i] + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
-  }
+var getInOutTimeText = function (checkin, checkout) {
+  var text = 'Заезд после ' + checkin + ', выезд до ' + checkout;
+  return text;
+};
 
-  return imgTags;
+var getPriceText = function (price) {
+  var text = price + ' ₽/ночь';
+  return text;
+};
+
+var generatePhotos = function (advertisement) {
+  var fragment = document.createDocumentFragment();
+
+  advertisement.forEach(function (element) {
+    var img = document.createElement('img');
+    img.className = 'popup__photo';
+    img.src = element;
+    img.alt = 'Фотография жилья';
+    img.width = PHOTOS_WIDTH;
+    img.height = PHOTOS_HEIGHT;
+    fragment.appendChild(img);
+  });
+  return fragment;
 };
 
 var createCard = function (advertisement) {
@@ -179,17 +199,19 @@ var createCard = function (advertisement) {
   address.textContent = advertisement.offer.address;
 
   var price = card.querySelector('.popup__text--price');
-  price.textContent = advertisement.offer.price + ' ₽/ночь';
+  var textPrice = getPriceText(advertisement.offer.price);
+  price.textContent = textPrice;
 
   var type = card.querySelector('.popup__type');
   type.textContent = RU_PROPERTIES_TYPE[advertisement.offer.type];
 
   var capacity = card.querySelector('.popup__text--capacity');
-  var textRoomsAndGuests = generateText(advertisement.offer.rooms, advertisement.offer.guests);
+  var textRoomsAndGuests = getRoomsGuestsCountText(advertisement.offer.rooms, advertisement.offer.guests);
   capacity.textContent = textRoomsAndGuests;
 
   var time = card.querySelector('.popup__text--time');
-  time.textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
+  var textTimeInOut = getInOutTimeText(advertisement.offer.checkin, advertisement.offer.checkout);
+  time.textContent = textTimeInOut;
 
   var features = card.querySelector('.popup__features');
   features.textContent = RU_FEATURES[advertisement.offer.features];
@@ -198,10 +220,18 @@ var createCard = function (advertisement) {
   description.textContent = advertisement.offer.description;
 
   var photos = card.querySelector('.popup__photos');
-  photos.innerHTML = generatePhotos(advertisement.offer.photos);
+  photos.innerHTML = '';
+  photos.appendChild(generatePhotos(advertisement.offer.photos));
 
   var avatar = card.querySelector('.popup__avatar');
   avatar.src = advertisement.author.avatar;
+
+  var setPopupElementTextContent = card.querySelectorAll(':scope > *');
+  setPopupElementTextContent.forEach(function (element) {
+    if (element.textContent === 'no value') {
+      element.classList.add('visually-hidden');
+    }
+  });
 
   return card;
 };
@@ -212,3 +242,5 @@ var renderCard = function (card) {
 
 var card = createCard(offers[0]);
 renderCard(card);
+
+
