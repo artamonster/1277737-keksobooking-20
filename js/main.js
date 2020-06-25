@@ -161,17 +161,26 @@ var getRoomsGuestsCountText = function (rooms, guests) {
   var endingWordRooms = getEndingsRooms(rooms);
   var endingWordGuests = getEndingsGuests(guests);
   var text = rooms + endingWordRooms + ' для ' + guests + endingWordGuests;
-  return text;
+  if (typeof rooms === 'number' && typeof guests === 'number') {
+    return text;
+  }
+  return '';
 };
 
 var getInOutTimeText = function (checkin, checkout) {
   var text = 'Заезд после ' + checkin + ', выезд до ' + checkout;
-  return text;
+  if (typeof checkin === 'number' && typeof checkout === 'number') {
+    return text;
+  }
+  return '';
 };
 
 var getPriceText = function (price) {
   var text = price + ' ₽/ночь';
-  return text;
+  if (typeof price === 'number') {
+    return text;
+  }
+  return '';
 };
 
 var generatePhotos = function (advertisement) {
@@ -226,9 +235,9 @@ var createCard = function (advertisement) {
   var avatar = card.querySelector('.popup__avatar');
   avatar.src = advertisement.author.avatar;
 
-  var setPopupElementTextContent = card.querySelectorAll(':scope > *');
+  var setPopupElementTextContent = card.querySelectorAll("popup__text");
   setPopupElementTextContent.forEach(function (element) {
-    if (element.textContent === 'no value') {
+    if (!element.textContent) {
       element.classList.add('visually-hidden');
     }
   });
