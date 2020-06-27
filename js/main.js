@@ -66,6 +66,7 @@ var map = document.querySelector('.map');
 var mapFiltersContainer = map.querySelector('.map__filters-container');
 var template = document.querySelector('#card').content.querySelector('.map__card');
 
+
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
