@@ -93,18 +93,22 @@ var mapPin = document.querySelector('.map__pins');
 // var mapFiltersContainer = map.querySelector('.map__filters-container');
 // var template = document.querySelector('#card').content.querySelector('.map__card');
 var notice = document.querySelector('.notice');
-var adForm = document.querySelector('.ad-form');
-var fieldsets = notice.querySelectorAll('fieldset');
-var inputs = adForm.querySelectorAll('input');
-var selects = adForm.querySelectorAll('select');
+var form = notice.querySelector('.ad-form');
+var fieldsets = form.querySelectorAll('fieldset');
+var inputs = form.querySelectorAll('input');
+var selects = form.querySelectorAll('select');
 var mapPinMain = document.querySelector('.map__pin--main');
-var mapFilters = document.querySelector('.map__filters');
-var address = document.querySelector('#address');
-var numberOfRoomsSelect = notice.querySelector('#room_number');
-var numberOfGuestsSelect = notice.querySelector('#capacity');
+var address = form.querySelector('#address');
+var numberOfRoomsSelect = form.querySelector('#room_number');
+var numberOfGuestsSelect = form.querySelector('#capacity');
 var submitButton = notice.querySelector('.ad-form__submit');
 var roomsNumber = numberOfRoomsSelect.value;
 var guestsNumber = numberOfGuestsSelect.value;
+var formElements = [
+  fieldsets,
+  inputs,
+  selects
+];
 
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -117,19 +121,14 @@ var getRandomIntInclusive = function (min, max) {
 };
 
 var generateFeatures = function () {
-  var numberOfFeatures = getRandomIntInclusive(1, FEATURES.length);
+  var unusedFeatures = FEATURES.slice();
   var features = [];
-  var feature = getRandomElement(FEATURES);
 
-  for (var i = 0; i < numberOfFeatures; i++) {
-
-    while (features.includes(feature)) {
-      feature = getRandomElement(FEATURES);
-    }
-
-    features[i] = feature;
+  if (features.length < unusedFeatures.length) {
+    var index = getRandomIntInclusive(0, unusedFeatures.length);
+    var feature = unusedFeatures.splice(index, 1);
+    features.push(feature);
   }
-
   return features;
 };
 
@@ -296,30 +295,23 @@ var renderPins = function (offers) {
 // renderCard(card);
 
 var disableForm = function () {
-  for (var i = 0; i < fieldsets.length; i++) {
-    fieldsets[i].setAttribute('disabled', 'disabled');
-  }
-  for (i = 0; i < inputs.length; i++) {
-    inputs[i].setAttribute('disabled', 'disabled');
-  }
-  for (i = 0; i < selects.length; i++) {
-    selects[i].setAttribute('disabled', 'disabled');
-  }
-  mapFilters.setAttribute('disabled', 'disabled');
+  form.classList.add('ad-form--disabled');
+
+  formElements.forEach(function (element) {
+    element.forEach(function (item) {
+      item.setAttribute('disabled', 'disabled');
+    });
+  });
 };
 
 var activateForm = function () {
-  adForm.classList.remove('ad-form--disabled');
-  for (var i = 0; i < fieldsets.length; i++) {
-    fieldsets[i].removeAttribute('disabled');
-  }
-  for (i = 0; i < inputs.length; i++) {
-    inputs[i].removeAttribute('disabled');
-  }
-  for (i = 0; i < selects.length; i++) {
-    selects[i].removeAttribute('disabled');
-  }
-  mapFilters.removeAttribute('disabled');
+  form.classList.remove('ad-form--disabled');
+
+  formElements.forEach(function (element) {
+    element.forEach(function (item) {
+      item.removeAttribute('disabled');
+    });
+  });
 };
 
 var setAddress = function (x, y) {
