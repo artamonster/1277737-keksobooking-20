@@ -66,7 +66,6 @@ var map = document.querySelector('.map');
 var mapFiltersContainer = map.querySelector('.map__filters-container');
 var template = document.querySelector('#card').content.querySelector('.map__card');
 
-
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
@@ -236,7 +235,7 @@ var createCard = function (advertisement) {
   var avatar = card.querySelector('.popup__avatar');
   avatar.src = advertisement.author.avatar;
 
-  var setPopupElementTextContent = card.querySelectorAll("popup__text");
+  var setPopupElementTextContent = card.querySelectorAll('popup__text');
   setPopupElementTextContent.forEach(function (element) {
     if (!element.textContent) {
       element.classList.add('visually-hidden');
