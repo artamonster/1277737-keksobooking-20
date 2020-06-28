@@ -88,6 +88,7 @@ var VALIDITY_TEXT = {
 };
 
 var map = document.querySelector('.map');
+
 var mapPin = document.querySelector('.map__pins');
 // var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 // var mapFiltersContainer = map.querySelector('.map__filters-container');
@@ -212,17 +213,26 @@ var renderPins = function (offers) {
 //   var endingWordRooms = getEndingsRooms(rooms);
 //   var endingWordGuests = getEndingsGuests(guests);
 //   var text = rooms + endingWordRooms + ' для ' + guests + endingWordGuests;
-//   return text;
+//   if (typeof rooms === 'number' && typeof guests === 'number') {
+//     return text;
+//   }
+//   return '';
 // };
 //
 // var getInOutTimeText = function (checkin, checkout) {
 //   var text = 'Заезд после ' + checkin + ', выезд до ' + checkout;
-//   return text;
+//   if (typeof checkin === 'number' && typeof checkout === 'number') {
+//     return text;
+//   }
+//   return '';
 // };
 //
 // var getPriceText = function (price) {
 //   var text = price + ' ₽/ночь';
-//   return text;
+//   if (typeof price === 'number') {
+//     return text;
+//   }
+//   return '';
 // };
 //
 // var generatePhotos = function (advertisement) {
@@ -277,12 +287,12 @@ var renderPins = function (offers) {
 //   var avatar = card.querySelector('.popup__avatar');
 //   avatar.src = advertisement.author.avatar;
 //
-//   var setPopupElementTextContent = card.querySelectorAll(':scope > *');
-//   setPopupElementTextContent.forEach(function (element) {
-//     if (!element.textContent) {
-//       element.classList.add('visually-hidden');
-//     }
-//   });
+// var setPopupElementTextContent = card.querySelectorAll('popup__text');
+// setPopupElementTextContent.forEach(function (element) {
+//   if (!element.textContent) {
+//     element.classList.add('visually-hidden');
+//   }
+// });
 //
 //   return card;
 // };
@@ -330,7 +340,6 @@ var getPinCoordinateX = function () {
 var getPinCoordinateY = function () {
   return mapPinMain.style.top.slice(0, PX_CUT) - PIN_OFFSET_X;
 };
-
 var validateRoomsCapacity = function (rooms, guests) {
 
   if ((guests > rooms && rooms !== AMOUNT.ROOM.MAX) || (rooms !== AMOUNT.ROOM.MAX && guests === 0) || (rooms === 100 && guests > 0)) {
