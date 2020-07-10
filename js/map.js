@@ -36,6 +36,10 @@
 
   window.map = {
     limit: limit,
+    map: map,
+    WIDTH: WIDTH,
+    TOP: TOP,
+    BOTTOM: BOTTOM,
     activate: activate,
     disable: disable
   };

@@ -2,12 +2,12 @@
 
 (function () {
   var OFFERS_NUMBER = 8;
-  // var PROPERTIES_TYPE = [
-  //   'palace',
-  //   'flat',
-  //   'house',
-  //   'bungalo'
-  // ];
+  var PROPERTIES_TYPE = [
+    'palace',
+    'flat',
+    'house',
+    'bungalo'
+  ];
   var RU_PROPERTIES_TYPE = {
     palace: 'Дворец',
     flat: 'Квартира',
@@ -40,25 +40,25 @@
   };
   var PHOTOS_WIDTH = 40;
   var PHOTOS_HEIGHT = 40;
-  // var CHECKIN_TIMES = [
-  //   '12:00',
-  //   '13:00',
-  //   '14:00'
-  // ];
-  //
-  // var CHECKOUT_TIMES = [
-  //   '12:00',
-  //   '13:00',
-  //   '14:00'
-  // ];
-  // var FEATURES = [
-  //   'wifi',
-  //   'dishwasher',
-  //   'parking',
-  //   'washer',
-  //   'elevator',
-  //   'conditioner'
-  // ];
+  var CHECKIN_TIMES = [
+    '12:00',
+    '13:00',
+    '14:00'
+  ];
+
+  var CHECKOUT_TIMES = [
+    '12:00',
+    '13:00',
+    '14:00'
+  ];
+  var FEATURES = [
+    'wifi',
+    'dishwasher',
+    'parking',
+    'washer',
+    'elevator',
+    'conditioner'
+  ];
 
   var RU_FEATURES = {
     wifi: 'Беспроводной интернет',
@@ -69,22 +69,22 @@
     conditioner: 'Кондиционер',
   };
 
-  // var PHOTOS = [
-  //   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-  //   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-  //   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-  // ];
-  // var generateFeatures = function () {
-  //   var unusedFeatures = FEATURES.slice();
-  //   var features = [];
-  //
-  //   if (features.length < unusedFeatures.length) {
-  //     var index = getRandomIntInclusive(0, unusedFeatures.length);
-  //     var feature = unusedFeatures.splice(index, 1);
-  //     features.push(feature);
-  //   }
-  //   return features;
-  // };
+  var PHOTOS = [
+    'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+    'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+    'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+  ];
+  var generateFeatures = function () {
+    var unusedFeatures = window.data.FEATURES.slice();
+    var features = [];
+
+    if (features.length < unusedFeatures.length) {
+      var index = window.utils.getRandomIntInclusive(0, unusedFeatures.length);
+      var feature = unusedFeatures.splice(index, 1);
+      features.push(feature);
+    }
+    return features;
+  };
   var getEndingsRooms = function (number) {
     if (number === 1) {
       return ' комната';
@@ -136,33 +136,33 @@
     return fragment;
   };
 
-  // var createOffer = function (offerNumber) {
-  //   var locationX = getRandomIntInclusive(0, MAP_WIDTH);
-  //   var locationY = getRandomIntInclusive(MAP_TOP_Y, MAP_BOTTOM_Y);
-  //   var offer = {
-  //     author: {
-  //       avatar: 'img/avatars/user0' + (offerNumber) + '.png'
-  //     },
-  //     offer: {
-  //       title: 'строка, заголовок предложения',
-  //       address: locationX + ', ' + locationY,
-  //       price: 1000,
-  //       type: getRandomElement(PROPERTIES_TYPE),
-  //       rooms: getRandomIntInclusive(AMOUNT.ROOM.MIN, AMOUNT.ROOM.MAX),
-  //       guests: getRandomIntInclusive(AMOUNT.GUEST.MIN, AMOUNT.GUEST.MAX),
-  //       checkin: getRandomElement(CHECKIN_TIMES),
-  //       checkout: getRandomElement(CHECKOUT_TIMES),
-  //       features: generateFeatures(),
-  //       description: 'строка с описанием',
-  //       photos: PHOTOS
-  //     },
-  //     location: {
-  //       x: locationX,
-  //       y: locationY
-  //     }
-  //   };
-  //   return offer;
-  // };
+  var createOffer = function (offerNumber) {
+    var locationX = window.utils.getRandomIntInclusive(0, window.map.WIDTH);
+    var locationY = window.utils.getRandomIntInclusive(window.map.TOP, window.map.BOTTOM);
+    var offer = {
+      author: {
+        avatar: 'img/avatars/user0' + (offerNumber) + '.png'
+      },
+      offer: {
+        title: 'строка, заголовок предложения',
+        address: locationX + ', ' + locationY,
+        price: 1000,
+        type: window.utils.getRandomElement(window.data.PROPERTIES_TYPE),
+        rooms: window.utils.getRandomIntInclusive(window.data.amount.ROOM.MIN, window.data.amount.ROOM.MAX),
+        guests: window.utils.getRandomIntInclusive(window.data.amount.GUEST.MIN, window.data.amount.GUEST.MAX),
+        checkin: window.utils.getRandomElement(window.data.CHECKIN_TIMES),
+        checkout: window.utils.getRandomElement(window.data.CHECKOUT_TIMES),
+        features: window.data.generateFeatures(),
+        description: 'строка с описанием',
+        photos: window.data.PHOTOS
+      },
+      location: {
+        x: locationX,
+        y: locationY
+      }
+    };
+    return offer;
+  };
   var getListOfOffers = function (data) {
     return window.utils.getMultipleRandomElements(data, OFFERS_NUMBER);
   };
@@ -170,23 +170,23 @@
 
   window.data = {
     OFFERS_NUMBER: OFFERS_NUMBER,
-    // PROPERTIES_TYPE: PROPERTIES_TYPE,
+    PROPERTIES_TYPE: PROPERTIES_TYPE,
     RU_PROPERTIES_TYPE: RU_PROPERTIES_TYPE,
     PROPERTIES_MIN_PRICE: PROPERTIES_MIN_PRICE,
     amount: amount,
     PHOTOS_WIDTH: PHOTOS_WIDTH,
     PHOTOS_HEIGHT: PHOTOS_HEIGHT,
-    // CHECKIN_TIME: CHECKIN_TIME,
-    // CHECKOUT_TIME: CHECKOUT_TIME,
-    // FEATURES: FEATURES,
+    CHECKIN_TIMES: CHECKIN_TIMES,
+    CHECKOUT_TIMES: CHECKOUT_TIMES,
+    FEATURES: FEATURES,
     RU_FEATURES: RU_FEATURES,
-    // PHOTOS: PHOTOS,
-    // generateFeatures: generateFeatures,
+    PHOTOS: PHOTOS,
+    generateFeatures: generateFeatures,
     getRoomsGuestsCountText: getRoomsGuestsCountText,
     getInOutTimeText: getInOutTimeText,
     getPriceText: getPriceText,
     generatePhotos: generatePhotos,
-    // createOffer: createOffer,
+    createOffer: createOffer,
     getListOfOffers: getListOfOffers
   };
 })();
